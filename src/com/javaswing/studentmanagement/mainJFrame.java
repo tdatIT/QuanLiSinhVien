@@ -4,6 +4,7 @@
  */
 package com.javaswing.studentmanagement;
 
+import java.awt.HeadlessException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
@@ -55,6 +56,7 @@ public class mainJFrame extends javax.swing.JFrame {
         jButtonDel = new javax.swing.JButton();
         jScrollPane3 = new javax.swing.JScrollPane();
         jTable2 = new javax.swing.JTable();
+        btnDone = new javax.swing.JButton();
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -213,6 +215,17 @@ public class mainJFrame extends javax.swing.JFrame {
         }
         jTable2.getAccessibleContext().setAccessibleName("");
 
+        btnDone.setBackground(new java.awt.Color(0, 102, 0));
+        btnDone.setFont(new java.awt.Font("Be Vietnam", 1, 14)); // NOI18N
+        btnDone.setForeground(new java.awt.Color(255, 255, 255));
+        btnDone.setText("Done");
+        btnDone.setEnabled(false);
+        btnDone.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDoneActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -220,14 +233,16 @@ public class mainJFrame extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(61, 61, 61)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 509, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                         .addComponent(jButtonAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(jButtonDel, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(jButtonUpdate, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
+                        .addComponent(jButtonUpdate)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnDone)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLbN)
@@ -263,9 +278,9 @@ public class mainJFrame extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(33, 33, 33)
                 .addComponent(jLabelTitle)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGap(38, 38, 38)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(38, 38, 38)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLbName, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jTextFieldMSSV, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -279,13 +294,13 @@ public class mainJFrame extends javax.swing.JFrame {
                             .addComponent(jLbName4, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jTextFieldGpa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jRadioButtonNu)
-                            .addComponent(jRadioButtonNam)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(146, 146, 146)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jButtonAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButtonDel, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButtonUpdate, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(jRadioButtonNam))
+                        .addGap(35, 35, 35)
+                        .addComponent(btnDone, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jButtonAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jButtonDel, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jButtonUpdate, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 45, Short.MAX_VALUE)
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(41, 41, 41))
@@ -384,8 +399,8 @@ public class mainJFrame extends javax.swing.JFrame {
     private void jButtonDelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonDelActionPerformed
 
         String idDel = JOptionPane.showInputDialog("Nhập vào id cần xóa");
-        int index = lst.removeStudent(idDel);
-        if (index != lst.getLstStudent().size()) {
+        int index = lst.findIndexStudent(idDel);
+        if (lst.removeStudent(idDel)) {
             JOptionPane.showMessageDialog(this, "Xóa thành công!!!");
             DefaultTableModel tblModel1 = (DefaultTableModel) jTable2.getModel();
             tblModel1.removeRow(index);
@@ -401,24 +416,80 @@ public class mainJFrame extends javax.swing.JFrame {
         String idEdit = JOptionPane.showInputDialog(rootPane, "Nhập vào MSSV cần sửa:");
         Student stEdit = lst.findStudentByID(idEdit);
         if (stEdit != null) {
-            inputJFrame jIF = new inputJFrame();
-            jIF.setVisible(true);
-            jIF.setValueStudent(stEdit);
+            JOptionPane.showMessageDialog(rootPane, "Tìm thành công SV:[" + idEdit
+                    + "]\n Nhập thông tin bên dưới");
+            jTextFieldName.setText(stEdit.getName());
+            jTextFieldMSSV.setText(stEdit.getId());
+            jTextFieldMSSV.setEnabled(false);
+            jTextFieldAddress.setText(stEdit.getAddress());
+            jTextFieldGpa.setText(stEdit.getGpa() + "");
+            if (stEdit.getSex()) {
+                if (jRadioButtonNam.isSelected()) {
+                    jRadioButtonNam.setSelected(true);
+                    jRadioButtonNu.setSelected(false);
+                } else {
+                    jRadioButtonNam.setSelected(false);
+                    jRadioButtonNu.setSelected(true);
+                }
+            }
+            btnDone.setEnabled(true);
+            jButtonAdd.setEnabled(false);
+            jButtonDel.setEnabled(false);
+            jButtonUpdate.setEnabled(false);
+
+        } else {
+            JOptionPane.showMessageDialog(this, "Cập nhật thất bại!!!");
         }
-        else
-            JOptionPane.showMessageDialog(this, "Không tìm thấy id nào trùng khớp!!!");
 
 
     }//GEN-LAST:event_jButtonUpdateActionPerformed
 
-    public void editStudentHomeF(Student st){
-        lst.updateInfoStudent(st);
-    }
+    private void btnDoneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDoneActionPerformed
+        // TODO add your handling code here:
+
+        try {
+            String id = jTextFieldMSSV.getText();
+            String name = jTextFieldName.getText();
+            String address = jTextFieldAddress.getText();
+            double gpa = Double.parseDouble(jTextFieldGpa.getText());
+            boolean sex;
+            if (jRadioButtonNam.isSelected()) {
+                sex = true;
+            } else {
+                sex = false;
+            }
+            Student stEdit = new Student(id, name, address, sex, gpa);
+            if (lst.updateInfoStudent(stEdit)) {
+                JOptionPane.showMessageDialog(rootPane, "Cập nhật không thành công");
+            }
+            DefaultTableModel tblModel1 = (DefaultTableModel) jTable2.getModel();
+            int index = lst.findIndexStudent(jTextFieldMSSV.getText());
+
+            tblModel1.setValueAt(stEdit.getId(), index, 0);
+            tblModel1.setValueAt(stEdit.getName(), index, 1);
+            tblModel1.setValueAt(stEdit.getAddress(), index, 2);
+            tblModel1.setValueAt((stEdit.getSex() ? "Nam" : "Nữ"), index, 3);
+            tblModel1.setValueAt(String.valueOf(stEdit.getGpa()), index, 4);
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(rootPane, "Lỗi định dạng nhập!!");
+        } catch (HeadlessException ex) {
+            JOptionPane.showMessageDialog(rootPane, "Lỗi cập nhật!!");
+        } finally {
+            jTextFieldMSSV.setEnabled(true);
+            btnDone.setEnabled(false);
+            jButtonAdd.setEnabled(true);
+            jButtonDel.setEnabled(true);
+            jButtonUpdate.setEnabled(true);
+        }
+
+
+    }//GEN-LAST:event_btnDoneActionPerformed
+
     /**
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-        
+
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new mainJFrame().setVisible(true);
@@ -426,9 +497,10 @@ public class mainJFrame extends javax.swing.JFrame {
         });
 
     }
-    
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnDone;
     private javax.swing.JButton jButtonAdd;
     private javax.swing.JButton jButtonDel;
     private javax.swing.JButton jButtonUpdate;

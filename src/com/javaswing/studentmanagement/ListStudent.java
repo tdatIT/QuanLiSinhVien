@@ -24,20 +24,13 @@ public class ListStudent {
         return "Thành công!!!";
     }
 
-    public int removeStudent(String idDel) {
-        int index = 0;
-        for (Student _student : lstStudent) {
-
-            if (_student.getId().equals(idDel)) {
-                break;
-            }
-            index++;
-        }
-        if (index != lstStudent.size()) {
+    public boolean removeStudent(String idDel) {
+        int index = findIndexStudent(idDel);
+        if (index < lstStudent.size()) {
             lstStudent.remove(index);
-            return index;
+            return true;
         }
-        return index;
+        return false;
     }
 
     public boolean updateInfoStudent(Student st) {
@@ -82,5 +75,14 @@ public class ListStudent {
                 return student;
         }
         return null;
+    }
+    public int findIndexStudent(String idFind){
+        int index=0;
+        for (Student student : lstStudent) {
+            if(student.getId().equals(idFind))
+                break;
+            index++;
+        }
+        return index;
     }
 }

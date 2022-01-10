@@ -19,9 +19,15 @@ public class ListStudent {
         this.lstStudent = lstStudent;
     }
 
-    public String addStudent(Student st) {
-        lstStudent.add(st);
-        return "Thành công!!!";
+    public boolean addStudent(Student st) {
+        if(checkingIDStudent(st)){
+            lstStudent.add(st);
+            return true;
+        }
+        else
+            return false;
+        
+        
     }
 
     public boolean removeStudent(String idDel) {

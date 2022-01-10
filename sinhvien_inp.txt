@@ -1,0 +1,15 @@
+﻿201101
+Nguyễn Văn Thành
+TP.HCM
+true
+3.6
+201102
+Trần Văn Công
+Bình Dương
+true
+3.5
+201103
+Phạm Thị Mỹ
+Bến Tre
+false
+3.6
